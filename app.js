@@ -1,16 +1,22 @@
 const defaultRates = {
   HUF: 1,
-  EUR: 395,
-  USD: 360,
-  GBP: 455,
 };
 
 const currencyNames = {
   HUF: "Magyar forint",
-  EUR: "Euro",
-  USD: "Amerikai dollar",
+  USD: "Amerikai dollár",
+  EUR: "Euró",
+  JPY: "Japán jen",
   GBP: "Angol font",
+  CNY: "Kínai jüan",
+  CHF: "Svájci frank",
+  CAD: "Kanadai dollár",
+  AUD: "Ausztrál dollár",
+  HKD: "Hongkongi dollár",
+  SGD: "Szingapúri dollár",
 };
+
+const rateCurrencies = ["USD", "EUR", "JPY", "GBP", "CNY", "CHF", "CAD", "AUD", "HKD", "SGD"];
 
 const amountInput = document.querySelector("#amount");
 const fromSelect = document.querySelector("#fromCurrency");
@@ -27,12 +33,11 @@ let rates = loadRates();
 let lastUpdated = localStorage.getItem("penzvalto-last-updated");
 
 function loadRates() {
-  const savedRates = localStorage.getItem("penzvalto-rates");
-  return savedRates ? JSON.parse(savedRates) : { ...defaultRates };
+  return { ...defaultRates };
 }
 
 function saveRates() {
-  localStorage.setItem("penzvalto-rates", JSON.stringify(rates));
+  // Mindig friss adatot kerünk, ezért nem mentjük el külön az árfolyamokat.
 }
 
 function saveLastUpdated(dateText) {
@@ -65,8 +70,13 @@ function calculate() {
   const fromCurrency = fromSelect.value;
   const toCurrency = toSelect.value;
 
+  if (!rates[fromCurrency] || !rates[toCurrency]) {
+    resultValue.textContent = "-";
+    return;
+  }
+
   if (!amount || amount < 0) {
-    resultValue.textContent = formatMoney(0, toCurrency);
+    resultValue.textContent = formatMoney(0, toCurrency || "HUF");
     return;
   }
 
@@ -77,45 +87,63 @@ function calculate() {
 
 async function refreshRates() {
   refreshRatesButton.disabled = true;
-  refreshRatesButton.textContent = "Frissites...";
-  updateRateStatus("Arfolyamok frissitese folyamatban.");
+  refreshRatesButton.textContent = "Frissítés...";
+  updateRateStatus("Árfolyamok frissítése folyamatban.");
 
   try {
-    const response = await fetch("https://api.frankfurter.dev/v2/rates?base=EUR&quotes=HUF,USD,GBP");
+    const response = await fetch(`https://api.frankfurter.dev/v2/rates?base=HUF&quotes=${rateCurrencies.join(",")}`);
 
     if (!response.ok) {
-      throw new Error("Nem sikerult lekerni az arfolyamokat.");
+      throw new Error("Nem sikerült lekérni az árfolyamokat.");
     }
 
     const data = await response.json();
     const apiRates = Object.fromEntries(data.map((item) => [item.quote, item.rate]));
 
-    if (!apiRates.HUF || !apiRates.USD || !apiRates.GBP) {
-      throw new Error("Hianyos arfolyam adat erkezett.");
+    if (rateCurrencies.some((code) => !apiRates[code])) {
+      throw new Error("Hiányos árfolyam adat érkezett.");
+    }
+
+    function hufPerCurrency(code) {
+      const value = 1 / apiRates[code];
+      return value >= 10 ? Math.round(value) : Number(value.toFixed(2));
     }
 
     rates = {
       HUF: 1,
-      EUR: Number(apiRates.HUF.toFixed(4)),
-      USD: Number((apiRates.HUF / apiRates.USD).toFixed(4)),
-      GBP: Number((apiRates.HUF / apiRates.GBP).toFixed(4)),
+      USD: hufPerCurrency("USD"),
+      EUR: hufPerCurrency("EUR"),
+      JPY: hufPerCurrency("JPY"),
+      GBP: hufPerCurrency("GBP"),
+      CNY: hufPerCurrency("CNY"),
+      CHF: hufPerCurrency("CHF"),
+      CAD: hufPerCurrency("CAD"),
+      AUD: hufPerCurrency("AUD"),
+      HKD: hufPerCurrency("HKD"),
+      SGD: hufPerCurrency("SGD"),
     };
 
     saveRates();
     saveLastUpdated(data[0].date);
+    fillCurrencySelectors();
     renderRateInputs();
     calculate();
-    updateRateStatus(`Frissitve: ${formatDate(data[0].date)}. Az arfolyamokat a bongeszo megjegyzi.`);
+    updateRateStatus(`Frissítve: ${formatDate(data[0].date)}.`);
   } catch (error) {
-    const savedText = lastUpdated ? ` Utolso sikeres frissites: ${formatDate(lastUpdated)}.` : "";
-    updateRateStatus(`Nem sikerult frissiteni. Az app a mentett arfolyamokat hasznalja.${savedText}`);
+    updateRateStatus("Az eléréshez internetkapcsolat szükséges.");
+    resultValue.textContent = "-";
   } finally {
     refreshRatesButton.disabled = false;
-    refreshRatesButton.textContent = "Frissites";
+    refreshRatesButton.textContent = "Frissítés";
   }
 }
 
 function fillCurrencySelectors() {
+  const previousFrom = fromSelect.value || "HUF";
+  const previousTo = toSelect.value || "EUR";
+  fromSelect.innerHTML = "";
+  toSelect.innerHTML = "";
+
   Object.keys(rates).forEach((code) => {
     const fromOption = new Option(`${code} - ${currencyNames[code]}`, code);
     const toOption = new Option(`${code} - ${currencyNames[code]}`, code);
@@ -123,14 +151,18 @@ function fillCurrencySelectors() {
     toSelect.add(toOption);
   });
 
-  fromSelect.value = "HUF";
-  toSelect.value = "EUR";
+  fromSelect.value = rates[previousFrom] ? previousFrom : "HUF";
+  toSelect.value = rates[previousTo] ? previousTo : "EUR";
 }
 
 function renderRateInputs() {
   ratesList.innerHTML = "";
 
-  Object.keys(rates).forEach((code) => {
+  rateCurrencies.forEach((code) => {
+    if (!rates[code]) {
+      return;
+    }
+
     const row = document.createElement("div");
     row.className = "rate-item";
 
@@ -138,31 +170,24 @@ function renderRateInputs() {
     label.className = "rate-code";
     label.textContent = code;
 
-    const input = document.createElement("input");
-    input.type = "number";
-    input.min = "0.0001";
-    input.step = "0.0001";
-    input.value = rates[code];
-    input.disabled = code === "HUF";
-    input.setAttribute("aria-label", `${code} arfolyam forintban`);
+    const value = document.createElement("div");
+    value.className = "rate-value";
+    value.textContent = `${formatRateValue(rates[code])} Ft`;
 
-    input.addEventListener("input", () => {
-      const value = Number(input.value);
-      if (value > 0) {
-        rates[code] = value;
-        saveRates();
-        calculate();
-      }
-    });
-
-    row.append(label, input);
+    row.append(label, value);
     ratesList.append(row);
   });
 }
 
+function formatRateValue(value) {
+  return new Intl.NumberFormat("hu-HU", {
+    maximumFractionDigits: value >= 10 ? 0 : 2,
+  }).format(value);
+}
+
 function updateInstallStatus() {
   const isStandalone = window.navigator.standalone || window.matchMedia("(display-mode: standalone)").matches;
-  installStatus.textContent = isStandalone ? "Telepitve" : "Bongeszo mod";
+  installStatus.textContent = isStandalone ? "Telepítve" : "App";
 }
 
 amountInput.addEventListener("input", calculate);
@@ -177,13 +202,7 @@ swapButton.addEventListener("click", () => {
 });
 
 resetRatesButton.addEventListener("click", () => {
-  rates = { ...defaultRates };
-  saveRates();
-  localStorage.removeItem("penzvalto-last-updated");
-  lastUpdated = null;
-  renderRateInputs();
-  calculate();
-  updateRateStatus("Az alap arfolyamok visszaallitva. A Frissites gombbal ujra lekerheted az aktualis adatokat.");
+  refreshRates();
 });
 
 refreshRatesButton.addEventListener("click", refreshRates);

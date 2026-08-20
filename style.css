@@ -229,6 +229,20 @@ button:focus {
   text-align: center;
 }
 
+.rate-value {
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fbfcfb;
+  padding: 12px 14px;
+  color: var(--ink);
+  font-size: 1.08rem;
+  font-weight: 800;
+}
+
 .secondary-action {
   width: 100%;
   min-height: 48px;

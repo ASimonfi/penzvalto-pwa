@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#0f766e" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-title" content="Penzvalto" />
+    <meta name="apple-mobile-web-app-title" content="Pénzváltó" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-    <title>Sajat penzvalto</title>
+    <title>Pénzváltó</title>
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="apple-touch-icon" href="icons/icon-192.png" />
     <link rel="stylesheet" href="style.css" />
@@ -15,23 +15,23 @@
   <body>
     <main class="app">
       <section class="hero" aria-labelledby="app-title">
-        <div>
-          <p class="eyebrow">Sajat arfolyamokkal</p>
-          <h1 id="app-title">Sajat penzvalto</h1>
-        </div>
-        <div class="status" id="installStatus">Bongeszo mod</div>
-      </section>
+  <div>
+    <p class="eyebrow">Napi árfolyamokkal</p>
+    <h1 id="app-title">Pénzváltó</h1>
+  </div>
+  <div class="status" id="installStatus">App</div>
+</section>
 
-      <section class="converter" aria-label="Penzvalto">
-        <label for="amount">Osszeg</label>
+      <section class="converter" aria-label="Pénzváltó">
+        <label for="amount">Összeg</label>
         <input id="amount" type="number" inputmode="decimal" min="0" step="0.01" value="1000" />
 
         <div class="currency-row">
           <div>
-            <label for="fromCurrency">Errol</label>
+            <label for="fromCurrency">Erről</label>
             <select id="fromCurrency"></select>
           </div>
-          <button id="swapButton" type="button" aria-label="Penznemek felcserelese">⇄</button>
+          <button id="swapButton" type="button" aria-label="Pénznemek felcserélése">⇄</button>
           <div>
             <label for="toCurrency">Erre</label>
             <select id="toCurrency"></select>
@@ -39,19 +39,19 @@
         </div>
 
         <div class="result" aria-live="polite">
-          <span>Atvaltott osszeg</span>
+          <span>Átváltott összeg</span>
           <strong id="resultValue">-</strong>
         </div>
       </section>
 
       <section class="rates" aria-labelledby="rates-title">
         <div class="section-heading">
-          <h2 id="rates-title">Arfolyamok</h2>
-          <button id="refreshRates" type="button">Frissites</button>
+          <h2 id="rates-title">Árfolyamok (HUF)</h2>
+          <button id="refreshRates" type="button">Frissítés</button>
         </div>
-        <p class="hint" id="rateStatus">Az app indulas utan megprobalja automatikusan frissiteni az arfolyamokat.</p>
+        <p class="hint" id="rateStatus">Az app indulás után automatikusan frissíti az árfolyamokat.</p>
         <div id="ratesList" class="rates-list"></div>
-        <button id="resetRates" class="secondary-action" type="button">Alap arfolyamok visszaallitasa</button>
+        <button id="resetRates" class="secondary-action" type="button">Újrafrissítés</button>
       </section>
     </main>
 
