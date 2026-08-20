@@ -16,7 +16,7 @@
     <main class="app">
       <section class="hero" aria-labelledby="app-title">
         <div>
-          <p class="eyebrow">Offline is megnyithato PWA alap</p>
+          <p class="eyebrow">Sajat arfolyamokkal</p>
           <h1 id="app-title">Sajat penzvalto</h1>
         </div>
         <div class="status" id="installStatus">Bongeszo mod</div>
@@ -47,10 +47,11 @@
       <section class="rates" aria-labelledby="rates-title">
         <div class="section-heading">
           <h2 id="rates-title">Arfolyamok</h2>
-          <button id="resetRates" type="button">Alap arfolyamok</button>
+          <button id="refreshRates" type="button">Frissites</button>
         </div>
-        <p class="hint">Az arfolyamokat most kezzel tudod atirni. Kesobb ingyenes API-val frissithetove teheto.</p>
+        <p class="hint" id="rateStatus">Az app indulas utan megprobalja automatikusan frissiteni az arfolyamokat.</p>
         <div id="ratesList" class="rates-list"></div>
+        <button id="resetRates" class="secondary-action" type="button">Alap arfolyamok visszaallitasa</button>
       </section>
     </main>
 

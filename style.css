@@ -1,13 +1,15 @@
 :root {
   color-scheme: light;
-  --bg: #f6f7f2;
+  --bg: #edf1ee;
   --panel: #ffffff;
   --ink: #17211f;
-  --muted: #69706c;
-  --line: #dfe4dd;
+  --muted: #66736e;
+  --line: #dce4df;
   --accent: #0f766e;
-  --accent-dark: #115e59;
-  --gold: #d99b2b;
+  --accent-dark: #0b5f59;
+  --accent-soft: #e7f5f2;
+  --gold: #d89b2a;
+  --danger: #b45309;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
@@ -18,7 +20,9 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background: var(--bg);
+  background:
+    linear-gradient(180deg, rgba(15, 118, 110, 0.12), rgba(15, 118, 110, 0) 260px),
+    var(--bg);
   color: var(--ink);
 }
 
@@ -31,7 +35,7 @@ select {
 .app {
   width: min(720px, 100%);
   margin: 0 auto;
-  padding: 20px;
+  padding: 18px;
 }
 
 .hero {
@@ -39,13 +43,13 @@ select {
   align-items: flex-start;
   justify-content: space-between;
   gap: 16px;
-  padding: 24px 0 18px;
+  padding: 26px 2px 20px;
 }
 
 .eyebrow {
   margin: 0 0 8px;
   color: var(--accent-dark);
-  font-size: 0.86rem;
+  font-size: 0.82rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0;
@@ -59,8 +63,8 @@ p {
 
 h1 {
   margin-bottom: 0;
-  font-size: clamp(2rem, 10vw, 3.4rem);
-  line-height: 1;
+  font-size: clamp(2.2rem, 10vw, 3.8rem);
+  line-height: 0.96;
 }
 
 h2 {
@@ -70,22 +74,23 @@ h2 {
 
 .status {
   flex: 0 0 auto;
-  border: 1px solid var(--line);
+  border: 1px solid rgba(15, 118, 110, 0.24);
   border-radius: 999px;
-  padding: 8px 12px;
-  background: #eef7f4;
+  padding: 9px 13px;
+  background: rgba(255, 255, 255, 0.76);
   color: var(--accent-dark);
   font-size: 0.9rem;
   font-weight: 700;
+  box-shadow: 0 8px 22px rgba(23, 33, 31, 0.08);
 }
 
 .converter,
 .rates {
   border: 1px solid var(--line);
-  border-radius: 8px;
+  border-radius: 18px;
   background: var(--panel);
-  padding: 18px;
-  box-shadow: 0 18px 40px rgba(23, 33, 31, 0.08);
+  padding: 20px;
+  box-shadow: 0 20px 48px rgba(23, 33, 31, 0.11);
 }
 
 .rates {
@@ -94,7 +99,7 @@ h2 {
 
 label {
   display: block;
-  margin-bottom: 7px;
+  margin-bottom: 8px;
   color: var(--muted);
   font-size: 0.92rem;
   font-weight: 700;
@@ -103,13 +108,14 @@ label {
 input,
 select {
   width: 100%;
-  min-height: 48px;
+  min-height: 54px;
   border: 1px solid var(--line);
-  border-radius: 8px;
-  background: #fff;
+  border-radius: 12px;
+  background: #fbfcfb;
   color: var(--ink);
-  padding: 10px 12px;
-  font-size: 1.04rem;
+  padding: 12px 14px;
+  font-size: 1.08rem;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 input:focus,
@@ -121,29 +127,43 @@ button:focus {
 
 .currency-row {
   display: grid;
-  grid-template-columns: 1fr 48px 1fr;
-  gap: 10px;
+  grid-template-columns: 1fr 54px 1fr;
+  gap: 12px;
   align-items: end;
-  margin-top: 14px;
+  margin-top: 16px;
 }
 
 #swapButton {
-  width: 48px;
-  height: 48px;
+  width: 54px;
+  height: 54px;
   border: 0;
-  border-radius: 8px;
+  border-radius: 14px;
   background: var(--accent);
   color: white;
   font-size: 1.35rem;
   font-weight: 800;
+  box-shadow: 0 10px 24px rgba(15, 118, 110, 0.26);
+  cursor: pointer;
+  transition: transform 0.16s ease, background 0.16s ease;
+}
+
+#swapButton:active {
+  transform: scale(0.96);
+}
+
+#swapButton:hover {
+  background: var(--accent-dark);
 }
 
 .result {
-  margin-top: 18px;
-  border-radius: 8px;
-  background: #17211f;
+  margin-top: 20px;
+  border-radius: 16px;
+  background:
+    linear-gradient(135deg, rgba(216, 155, 42, 0.18), rgba(216, 155, 42, 0) 45%),
+    #17211f;
   color: white;
-  padding: 18px;
+  padding: 22px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .result span {
@@ -156,7 +176,7 @@ button:focus {
 .result strong {
   display: block;
   overflow-wrap: anywhere;
-  font-size: clamp(1.8rem, 9vw, 3rem);
+  font-size: clamp(2.05rem, 9vw, 3.25rem);
   line-height: 1.05;
 }
 
@@ -169,48 +189,76 @@ button:focus {
 
 .section-heading button {
   border: 1px solid var(--line);
-  border-radius: 8px;
-  background: #fff8ec;
-  color: #6f4700;
-  padding: 9px 12px;
+  border-radius: 12px;
+  background: var(--accent);
+  color: #ffffff;
+  padding: 10px 13px;
   font-weight: 700;
+  cursor: pointer;
+}
+
+.section-heading button:disabled {
+  cursor: wait;
+  opacity: 0.7;
 }
 
 .hint {
-  margin: 8px 0 14px;
+  margin: 10px 0 16px;
   color: var(--muted);
   line-height: 1.45;
 }
 
 .rates-list {
   display: grid;
-  gap: 10px;
+  gap: 12px;
 }
 
 .rate-item {
   display: grid;
-  grid-template-columns: 92px 1fr;
+  grid-template-columns: 94px 1fr;
   gap: 10px;
   align-items: center;
 }
 
 .rate-code {
-  border-radius: 8px;
-  background: #eef7f4;
-  padding: 12px;
+  border-radius: 12px;
+  background: var(--accent-soft);
+  padding: 14px 12px;
   color: var(--accent-dark);
   font-weight: 800;
   text-align: center;
 }
 
+.secondary-action {
+  width: 100%;
+  min-height: 48px;
+  margin-top: 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff8ec;
+  color: var(--danger);
+  font-weight: 700;
+  cursor: pointer;
+}
+
 @media (max-width: 520px) {
   .app {
-    padding: 16px;
+    padding: 14px;
   }
 
   .hero,
   .section-heading {
     display: grid;
+  }
+
+  .hero {
+    padding-top: 20px;
+  }
+
+  .converter,
+  .rates {
+    border-radius: 16px;
+    padding: 16px;
   }
 
   .currency-row {
@@ -219,5 +267,9 @@ button:focus {
 
   #swapButton {
     width: 100%;
+  }
+
+  .rate-item {
+    grid-template-columns: 74px 1fr;
   }
 }
