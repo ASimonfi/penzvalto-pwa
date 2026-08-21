@@ -1,4 +1,4 @@
-const CACHE_NAME = "penzvalto-pwa-v5";
+const CACHE_NAME = "penzvalto-pwa-v6";
 const FILES_TO_CACHE = [
   "./",
   "./index.html",
