@@ -15,19 +15,20 @@
   <body>
     <main class="app">
       <section class="hero" aria-labelledby="app-title">
-        <div>
-          <p class="eyebrow">Napi árfolyamokkal</p>
-          <h1 id="app-title">Pénzváltó</h1>
-        </div>
-      </section>
+  <div>
+    <p class="eyebrow">Napi árfolyamokkal</p>
+    <h1 id="app-title">Pénzváltó</h1>
+  </div>
+
+</section>
 
       <section class="converter" aria-label="Penzvalto">
-        <label for="amount">Osszeg</label>
+        <label for="amount">Összeg</label>
         <input id="amount" type="number" inputmode="decimal" min="0" step="0.01" value="1000" />
 
         <div class="currency-row">
           <div>
-            <label for="fromCurrency">Errol</label>
+            <label for="fromCurrency">Erről</label>
             <select id="fromCurrency"></select>
           </div>
           <button id="swapButton" type="button" aria-label="Penznemek felcserelese">⇄</button>
@@ -38,7 +39,7 @@
         </div>
 
         <div class="result" aria-live="polite">
-          <span>Atvaltott osszeg</span>
+          <span>Átvaltott összeg</span>
           <strong id="resultValue">-</strong>
         </div>
       </section>
@@ -46,6 +47,7 @@
       <section class="rates" aria-labelledby="rates-title">
         <div class="section-heading">
           <h2 id="rates-title">Árfolyamok (HUF)</h2>
+         
         </div>
         <p class="hint" id="rateStatus">Az app indulás után automatikusan frissíti az árfolyamokat</p>
         <div id="ratesList" class="rates-list"></div>
