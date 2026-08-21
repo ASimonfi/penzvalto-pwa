@@ -1,15 +1,25 @@
 :root {
-  color-scheme: light;
-  --bg: #edf1ee;
-  --panel: #ffffff;
-  --ink: #17211f;
-  --muted: #66736e;
-  --line: #dce4df;
-  --accent: #0f766e;
-  --accent-dark: #0b5f59;
-  --accent-soft: #e7f5f2;
-  --gold: #d89b2a;
-  --danger: #b45309;
+  color-scheme: dark;
+
+  --bg: #17131d;
+  --panel: rgba(28, 24, 36, 0.92);
+
+  --ink: #ffffff;
+  --muted: #e4e1e8;
+
+  --line: rgba(255, 255, 255, 0.18);
+
+  --accent: #9b4dff;
+  --accent-dark: #7029c9;
+
+  --accent-soft: rgba(0, 220, 210, 0.18);
+
+  --turquoise: #00e0d0;
+  --turquoise-dark: #00a99f;
+
+  --gold: #ffcf4a;
+  --danger: #ff6b8a;
+
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
@@ -20,9 +30,28 @@
 body {
   margin: 0;
   min-height: 100vh;
+
   background:
-    linear-gradient(180deg, rgba(15, 118, 110, 0.12), rgba(15, 118, 110, 0) 260px),
-    var(--bg);
+    radial-gradient(circle at 12% 18%, rgba(155, 77, 255, 0.28) 0 5%, transparent 18%),
+    radial-gradient(circle at 88% 12%, rgba(0, 224, 208, 0.22) 0 4%, transparent 17%),
+    radial-gradient(circle at 80% 70%, rgba(155, 77, 255, 0.20) 0 6%, transparent 20%),
+    radial-gradient(circle at 20% 85%, rgba(0, 224, 208, 0.16) 0 5%, transparent 18%),
+    repeating-linear-gradient(
+      115deg,
+      rgba(255, 255, 255, 0.025) 0,
+      rgba(255, 255, 255, 0.025) 2px,
+      transparent 2px,
+      transparent 9px
+    ),
+    repeating-linear-gradient(
+      25deg,
+      rgba(255, 255, 255, 0.018) 0,
+      rgba(255, 255, 255, 0.018) 1px,
+      transparent 1px,
+      transparent 7px
+    ),
+    #17131d;
+
   color: var(--ink);
 }
 
@@ -86,11 +115,14 @@ h2 {
 
 .converter,
 .rates {
-  border: 1px solid var(--line);
+  border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 18px;
-  background: var(--panel);
+  background: rgba(28, 24, 36, 0.88);
   padding: 20px;
-  box-shadow: 0 20px 48px rgba(23, 33, 31, 0.11);
+  box-shadow:
+    0 20px 48px rgba(0, 0, 0, 0.45),
+    0 0 35px rgba(155, 77, 255, 0.08);
+  backdrop-filter: blur(10px);
 }
 
 .rates {
@@ -109,13 +141,15 @@ input,
 select {
   width: 100%;
   min-height: 54px;
-  border: 1px solid var(--line);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 12px;
-  background: #fbfcfb;
-  color: var(--ink);
+  background: rgba(10, 8, 15, 0.72);
+  color: #ffffff;
   padding: 12px 14px;
   font-size: 1.08rem;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 0 18px rgba(0, 224, 208, 0.04);
 }
 
 input:focus,
