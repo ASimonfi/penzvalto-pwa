@@ -25,7 +25,6 @@ const resultValue = document.querySelector("#resultValue");
 const ratesList = document.querySelector("#ratesList");
 const swapButton = document.querySelector("#swapButton");
 const resetRatesButton = document.querySelector("#resetRates");
-const refreshRatesButton = document.querySelector("#refreshRates");
 const rateStatus = document.querySelector("#rateStatus");
 const installStatus = document.querySelector("#installStatus");
 
@@ -205,7 +204,6 @@ resetRatesButton.addEventListener("click", () => {
   refreshRates();
 });
 
-refreshRatesButton.addEventListener("click", refreshRates);
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
