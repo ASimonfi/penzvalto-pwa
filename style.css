@@ -165,11 +165,28 @@ button:focus {
 }
 
 .currency-row {
-  display: grid;
-  grid-template-columns: 1fr 54px 1fr;
-  gap: 12px;
-  align-items: end;
-  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.currency-select {
+  width: 100%;
+}
+
+.currency-arrow {
+  align-self: center;
+  width: 48px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: #3a3740;
+  color: #aaa7b0;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 20px;
 }
 
 #swapButton {
