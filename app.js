@@ -26,6 +26,7 @@ const ratesList = document.querySelector("#ratesList");
 const swapButton = document.querySelector("#swapButton");
 const resetRatesButton = document.querySelector("#resetRates");
 const rateStatus = document.querySelector("#rateStatus");
+const installStatus = document.querySelector("#installStatus");
 
 let rates = loadRates();
 let lastUpdated = localStorage.getItem("penzvalto-last-updated");
@@ -84,7 +85,9 @@ function calculate() {
 }
 
 async function refreshRates() {
-      updateRateStatus("Árfolyamok frissítése folyamatban.");
+  refreshRatesButton.disabled = true;
+  refreshRatesButton.textContent = "Frissítés...";
+  updateRateStatus("Árfolyamok frissítése folyamatban.");
 
   try {
     const response = await fetch(`https://api.frankfurter.dev/v2/rates?base=HUF&quotes=${rateCurrencies.join(",")}`);
@@ -129,7 +132,9 @@ async function refreshRates() {
     updateRateStatus("Az eléréshez internetkapcsolat szükséges.");
     resultValue.textContent = "-";
   } finally {
-          }
+    refreshRatesButton.disabled = false;
+    refreshRatesButton.textContent = "Frissítés";
+  }
 }
 
 function fillCurrencySelectors() {
@@ -179,6 +184,10 @@ function formatRateValue(value) {
   }).format(value);
 }
 
+function updateInstallStatus() {
+  const isStandalone = window.navigator.standalone || window.matchMedia("(display-mode: standalone)").matches;
+  installStatus.textContent = isStandalone ? "Telepítve" : "App";
+}
 
 amountInput.addEventListener("input", calculate);
 fromSelect.addEventListener("change", calculate);
@@ -204,5 +213,6 @@ if ("serviceWorker" in navigator) {
 
 fillCurrencySelectors();
 renderRateInputs();
+updateInstallStatus();
 calculate();
 refreshRates();
