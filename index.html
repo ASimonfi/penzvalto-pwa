@@ -26,17 +26,15 @@
         <input id="amount" type="number" inputmode="decimal" min="0" step="0.01" value="1000" />
 
        <div class="currency-row">
-  <div>
-    <label for="fromCurrency">Erről</label>
+  <div class="currency-select">
     <select id="fromCurrency"></select>
   </div>
 
-  <div>
-    <label for="toCurrency">Erre</label>
+  <div class="currency-arrow" aria-hidden="true">⌄</div>
+
+  <div class="currency-select">
     <select id="toCurrency"></select>
   </div>
-
-  <button id="swapButton" type="button" aria-label="Pénznemek felcserélése">⇄</button>
 </div>
 
         <div class="result" aria-live="polite">
