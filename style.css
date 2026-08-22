@@ -256,7 +256,7 @@ button:focus {
 
 .rate-code {
   border-radius: 12px;
-  background: var(--turquoise);
+  background: #05273a;
   padding: 14px 12px;
   color: #ffffff;
   font-weight: 800;
@@ -282,12 +282,22 @@ button:focus {
   width: 100%;
   min-height: 48px;
   margin-top: 14px;
-  border: 1px solid var(--line);
+  border: 0;
   border-radius: 12px;
-  background: #fff8ec;
-  color: var(--danger);
+  background: var(--accent);
+  color: #ffffff;
   font-weight: 700;
   cursor: pointer;
+  box-shadow: 0 10px 24px rgba(155, 77, 255, 0.26);
+  transition: transform 0.16s ease, background 0.16s ease;
+}
+
+.secondary-action:active {
+  transform: scale(0.98);
+}
+
+.secondary-action:hover {
+  background: var(--accent-dark);
 }
 
 @media (max-width: 520px) {
