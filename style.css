@@ -256,11 +256,12 @@ button:focus {
 
 .rate-code {
   border-radius: 12px;
-  background: var(--accent-soft);
+  background: var(--turquoise);
   padding: 14px 12px;
-  color: var(--accent-dark);
+  color: #ffffff;
   font-weight: 800;
   text-align: center;
+  box-shadow: 0 0 16px rgba(0, 224, 208, 0.18);
 }
 
 .rate-value {
@@ -268,11 +269,11 @@ button:focus {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  border: 1px solid var(--line);
+  border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 12px;
-  background: #fbfcfb;
+  background: #3a3740;
   padding: 12px 14px;
-  color: var(--ink);
+  color: #ffffff;
   font-size: 1.08rem;
   font-weight: 800;
 }
